@@ -1,0 +1,25 @@
+---
+
+- name: "Backup del sources.list original"
+  copy:
+    src: /etc/apt/sources.list
+    dest: /etc/apt/sources.list.bak
+    remote_src: yes
+    force: no
+
+- name: "Configurar el sources.list para usar Nexus como Proxy"
+  copy:
+    dest: /etc/apt/sources.list
+    content: |
+      deb http://{{ nexus_user }}:{{ nexus_pass }}@{{ nexus_host }}:{{ nexus_port }}/repository/{{ nexus_repo }}/ jammy main restricted universe multiverse
+      deb http://{{ nexus_user }}:{{ nexus_pass }}@{{ nexus_host }}:{{ nexus_port }}/repository/{{ nexus_repo }}/ jammy-updates main restricted universe multiverse
+      deb http://{{ nexus_user }}:{{ nexus_pass }}@{{ nexus_host }}:{{ nexus_port }}/repository/{{ nexus_repo }}/ jammy-security main restricted universe multiverse
+    mode: '0644'
+
+- name: "Actualizar la cache de APT e instalar herramientas"
+  apt:
+    update_cache: yes
+    name:
+      - net-tools
+      - curl
+    state: present

@@ -1,0 +1,17 @@
+---
+# deploy-nexus-proxy.yml
+
+- name: "Despliegue de repositorio corporativo vía Nexus"
+  hosts: laboratorio
+  become: yes
+  gather_facts: false
+
+  vars:
+    nexus_user: "admin"
+    nexus_pass: "Cacrolito"
+    nexus_host: "nexus-lab"
+    nexus_port: "8081"
+    nexus_repo: "ubuntu-proxy-lab"
+
+  roles:
+    - setup-nexus-repo
