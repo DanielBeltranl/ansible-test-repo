@@ -1,0 +1,7 @@
+---
+- name: "Aprovisionamiento de Servidores de Laboratorio"
+  hosts: laboratorio
+  become: yes
+
+  roles:
+    - Prueba
