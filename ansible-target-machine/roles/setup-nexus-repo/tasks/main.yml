@@ -1,23 +1,13 @@
 ---
 # roles/setup-nexus-repo/tasks/main.yml
 
-- name: "Backup del sources.list original"
-  shell: "cp /etc/apt/sources.list /etc/apt/sources.list.bak"
-  args:
-    creates: /etc/apt/sources.list.bak
-
-- name: "Inyectar configuración de Nexus"
-  copy:
-    dest: /etc/apt/sources.list
-    content: |
-      deb http://{{ nexus_user }}:{{ nexus_pass }}@{{ nexus_host }}:{{ nexus_port }}/repository/{{ nexus_repo }}/ jammy main restricted universe multiverse
-      deb http://{{ nexus_user }}:{{ nexus_pass }}@{{ nexus_host }}:{{ nexus_port }}/repository/{{ nexus_repo }}/ jammy-updates main restricted universe multiverse
-      deb http://{{ nexus_user }}:{{ nexus_pass }}@{{ nexus_host }}:{{ nexus_port }}/repository/{{ nexus_repo }}/ jammy-security main restricted universe multiverse
+- name: "Descargar el binario desde el Nexus Hosted"
+  get_url:
+    # Recuerda: Desde el contenedor usamos 'nexus-lab'
+    url: "http://{{ nexus_user }}:{{ nexus_pass }}@nexus-lab:8081/repository/sonda-binary-store/network/net-tools.deb"
+    dest: "/tmp/net-tools.deb"
     mode: '0644'
 
-- name: "Update manual para 'calentar' el Nexus"
-  shell: "apt-get update"
-  # Usamos shell porque no requiere python3-apt en el destino
-
-- name: "Instalar python3-apt y herramientas (Ahora sí con apt)"
-  shell: "apt-get install -y python3-apt net-tools curl"
+- name: "Instalar paquete .deb localmente"
+  apt:
+    deb: "/tmp/net-tools.deb"
