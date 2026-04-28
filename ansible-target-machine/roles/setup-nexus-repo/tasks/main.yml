@@ -5,6 +5,6 @@
     dest: "/tmp/net-tools.deb"
     mode: '0644'
 
-- name: "Instalar el paquete .deb localmente"
-  apt:
-    deb: "/tmp/net-tools.deb"
+- name: "Instalar mediante dpkg (Ignora repositorios y bloqueos)"
+  command: "dpkg -i /tmp/net-tools.deb"
+  # Usamos command en vez de apt para evitar que Ansible intente validar repositoriosg
