@@ -1,25 +1,21 @@
 ---
-- name: "Instalar herramientas de red"
-  apt:
-    name:
-      - net-tools
-      - curl
-    state: present
-    update_cache: yes
+- name: "Imprimir mensaje de depuracion en el motor"
+  debug:
+    msg: "Iniciando provisionamiento offline en el nodo..."
 
-- name: "Crear estructura de directorios para la App"
+- name: "Crear un archivo de auditoria en el target"
   file:
-    path: /opt/sonda_data/logs
-    state: directory
-    mode: '0755'
+    path: /tmp/auditoria_devops.txt
+    state: touch
+    mode: '0644'
     owner: root
 
-- name: "Personalizar el Banner de bienvenida"
+- name: "Inyectar mensaje de bienvenida (MOTD)"
   copy:
     dest: /etc/motd
     content: |
       ===============================================
-      SERVIDOR DE LABORATORIO - SONDA DEVOPS
-      Gestionado por: Ansible (Role: Prueba)
-      Estado: Provisionado correctamente.
+      SERVIDOR DE LABORATORIO - ENTORNO AISLADO
+      Gestionado por: Ansible (Rol: Prueba)
+      Estado: Provisionado sin salida a internet.
       ===============================================
