@@ -1,13 +1,10 @@
 ---
-# roles/setup-nexus-repo/tasks/main.yml
-
 - name: "Descargar el binario desde el Nexus Hosted"
   get_url:
-    # Recuerda: Desde el contenedor usamos 'nexus-lab'
-    url: "http://{{ nexus_user }}:{{ nexus_pass }}@nexus-lab:8081/repository/raw-repo-lab/network/net-tools.deb"
+    url: "http://{{ nexus_user }}:{{ nexus_pass }}@nexus-lab:8081/repository/raw-repo-lab/network/net-tools.deb./net-tools_1.60+git20181103.0eebece-1ubuntu5.4_amd64.deb"
     dest: "/tmp/net-tools.deb"
     mode: '0644'
 
-- name: "Instalar paquete .deb localmente"
+- name: "Instalar el paquete .deb localmente"
   apt:
     deb: "/tmp/net-tools.deb"
