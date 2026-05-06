@@ -7,4 +7,4 @@ nexus-server:
   osFamily: unix
   # Parametros para que Rundeck sepa usar Ansible con este nodo
   ansible-ssh-user: root
-  ansible-ssh-keypath: /home/rundeck/.ssh/id_ed25519
+  ansible-ssh-keypath: /home/rundeck/.ssh/id_rsa_rundeck
