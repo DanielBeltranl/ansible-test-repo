@@ -1,0 +1,10 @@
+nexus-server:
+  nodename: nexus-server
+  hostname: 165.227.198.43
+  username: root
+  description: "Droplet de DigitalOcean - Sanos y Salvos"
+  tags: nexus, infra
+  osFamily: unix
+  # Parametros para que Rundeck sepa usar Ansible con este nodo
+  ansible-ssh-user: root
+  ansible-ssh-keypath: /home/rundeck/.ssh/id_ed25519
